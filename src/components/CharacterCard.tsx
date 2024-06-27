@@ -1,8 +1,10 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import React, { FC } from "react";
+import React, { FC, useContext } from "react";
 import { Character } from "../types/character";
 import { useNavigation } from "@react-navigation/native";
+import { temaClaro, temaEscuro } from "../theme/theme";
 import { StackParamList } from "../types/navigation";
+import { ThemeContext } from "./ThemeContext";
 
 interface CardProps {
   character: Character;
@@ -10,6 +12,30 @@ interface CardProps {
 
 const CharacterCard: FC<CardProps> = ({ character }) => {
   const navigation = useNavigation<any>();
+  const {theme } = useContext(ThemeContext);
+
+  const styles = StyleSheet.create({
+    container: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: theme === "temaEscuro" ? "#252525" : "#fff",
+      padding: 16,
+      borderWidth: 1,
+      borderColor: "#000000",
+      margin: 10,
+    },
+    image: {
+      width: 300,
+      height: 200,
+      borderRadius: 2,
+      margin: 10,
+      resizeMode: "contain",
+    },
+    text: {
+      color: theme === "temaClaro" ? temaClaro.colorLetras : temaEscuro.colorLetras,     
+    },
+  });
 
   return (
     <TouchableOpacity
@@ -25,26 +51,4 @@ const CharacterCard: FC<CardProps> = ({ character }) => {
 
 export default CharacterCard;
 
-const styles = StyleSheet.create({
-  container: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#252525",
-    color: "#FFFFFF",
-    padding: 16,
-    borderWidth: 1,
-    borderColor: "#FFFFFF",
-    margin: 10,
-  },
-  image: {
-    width: 300,
-    height: 200,
-    borderRadius: 2,
-    margin: 10,
-    resizeMode: "contain",
-  },
-  text: {
-    color: "#FFFFFF",
-  },
-});
+
